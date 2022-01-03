@@ -1,8 +1,13 @@
 package org.example.models;
 
 public class Light extends Thing{
-    private boolean isLightOn = false;
 
+    public interface OnLightChangedListener{
+        void onLightChanged(Light light);
+    }
+
+    private boolean isLightOn = false;
+    private OnLightChangedListener lightChangedListener;
 
     @Override
     public String getTypeName() {
@@ -20,5 +25,12 @@ public class Light extends Thing{
 
     public void setLightOn(boolean lightOn) {
         isLightOn = lightOn;
+        if (lightChangedListener != null){
+            lightChangedListener.onLightChanged(this);
+        }
+    }
+
+    public void setLightChangedListener(OnLightChangedListener lightChangedListener) {
+        this.lightChangedListener = lightChangedListener;
     }
 }

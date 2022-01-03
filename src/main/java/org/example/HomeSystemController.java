@@ -12,7 +12,7 @@ public class HomeSystemController {
     public String list(Request request, Response response){
 
         Map<String, Object> model = new HashMap<>();
-        model.put("things", App.homeSystem.getThings());
+        model.put("things", HomeSystem.getInstance().getThings());
         return Template.render("home.html", model);
     }
 }

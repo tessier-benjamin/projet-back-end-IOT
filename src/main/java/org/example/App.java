@@ -10,18 +10,19 @@ import java.util.HashMap;
 
 public class App {
 
-    public static HomeSystem homeSystem;
 
     public static void main(String[] args) {
         initialize();
 
-        homeSystem = new HomeSystem();
+        HomeSystem homeSystem = HomeSystem.getInstance();
         Light light = new Light();
         light.setName("Living room");
+        light.setLightChangedListener(homeSystem);
         homeSystem.addThing(light);
 
         light = new Light();
         light.setName("Bedroom");
+        light.setLightChangedListener(homeSystem);
         homeSystem.addThing(light);
 
         HomeSystemController homeSystemController =new HomeSystemController();
