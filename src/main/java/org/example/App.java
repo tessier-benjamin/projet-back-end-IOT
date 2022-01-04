@@ -4,6 +4,7 @@ import org.example.core.Conf;
 import org.example.core.Template;
 import org.example.middlewares.LoggerMiddleware;
 import org.example.models.Light;
+import org.example.models.Thermostat;
 import spark.Spark;
 
 import java.util.HashMap;
@@ -13,8 +14,8 @@ public class App {
 
     public static void main(String[] args) {
         initialize();
-
-        HomeSystem homeSystem = HomeSystem.getInstance();
+        SystemLogger logger = new SystemLogger();
+        HomeSystem homeSystem = new HomeSystem(logger);
         Light light = new Light();
         light.setName("Living room");
         light.setLightChangedListener(homeSystem);
@@ -25,8 +26,12 @@ public class App {
         light.setLightChangedListener(homeSystem);
         homeSystem.addThing(light);
 
-        HomeSystemController homeSystemController =new HomeSystemController();
-        ThingController thingController =new ThingController();
+        Thermostat thermostat = new Thermostat(10,30);
+        thermostat.setName("Kitchen");
+        homeSystem.addThing(thermostat);
+
+        HomeSystemController homeSystemController =new HomeSystemController(homeSystem);
+        ThingController thingController =new ThingController(homeSystem);
 
         Spark.get("/", (req, res) -> homeSystemController.list(req,res));
         Spark.get("/things/:id", (req, res) -> thingController.detail(req,res));
