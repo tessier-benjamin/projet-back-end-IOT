@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant Utilisateur
+    participant ThingController
+    participant Thermostat
+
+    Utilisateur->>+ThingController: click Update temperature
+
+    ThingController->>Thermostat:setTemperature()
+
+    Thermostat->>Thermostat:verifier valeur + update state
+
+    ThingController-->-Utilisateur: affiche resultat

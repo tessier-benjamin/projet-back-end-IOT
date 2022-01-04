@@ -1,0 +1,41 @@
+classDiagram
+    class ThingState{
+        <<enumeration>>
+        REACHABLE
+        UNREACHABLE
+    }
+    class Thing{
+        #name: String
+        #state;Thing.state
+        +getTypeName()*
+        +getDescription()*
+    }
+    <<abstract>> Thing
+    Thing <|-- Light
+    Thing <|-- Thermostat
+    Thing -- ThingState
+    class Light{
+        -isLightOn: boolean
+        +setLightOn(boolean)
+    }
+    class Thermostat{
+        -temperature: int
+        +setTemperature()
+        +int Min()
+        +int Max()
+    }
+
+    class HomeSystemState{
+        <<enumeration>>
+        ON
+        OFF
+    }
+
+    class HomeSystem{
+        -things : List<Thing>
+        -state : HomeSystemState
+        +toggleAllLights(on: boolean)
+    }
+
+    HomeSystem -- HomeSystemState
+    HomeSystem o-- Thing
